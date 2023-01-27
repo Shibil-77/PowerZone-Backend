@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 import userSchema from '../models/userSchema'
 
-export const emailSenders =async (email:string,id:string,fullName:string)=>{
+export const emailSenders =async (email:string,id:string,fullName:string,url:string)=>{
     const transporter = nodemailer.createTransport({
         host: process.env.HOST,
         service: process.env.SERVICE,
@@ -16,12 +16,12 @@ export const emailSenders =async (email:string,id:string,fullName:string)=>{
       await transporter.sendMail({
         from: process.env.EMAIL,
         to: email,
-        subject: "Email email verification from powerZone",
+        subject: "Email verification from powerZone",
         text:`Hi ${fullName},\n\nPlease verify your account by clicking 
-        http://localhost:3000/verify/${id}
+        http://localhost:3000/${url}/${id}
         \nThanks `
       })
        setTimeout(async() => {
-            await userSchema.updateOne({_id:id},{ $unset: { timeRanges: 1 } })
-      }, 6000*5);
+         await userSchema.updateOne({_id:id},{ $unset: { timeRanges: 1}})
+      }, 6000*10);
 }
