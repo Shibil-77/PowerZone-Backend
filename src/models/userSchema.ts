@@ -28,6 +28,9 @@ const userSchema  = new mongoose.Schema({
     access:{
         type: Boolean,
         require:true,
+    },
+    timeRanges:{
+        type:Number
     }
     })
 
