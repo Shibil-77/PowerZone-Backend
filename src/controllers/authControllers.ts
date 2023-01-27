@@ -12,7 +12,6 @@ export const register = async (req: Request, res: Response) => {
             if (password === confirmPassword) {
                 const userExist = await userSchema.findOne({ email: email })
                 if (!userExist) {
-                    console.log(phone.length);
                     if (phone !== null && phone !== undefined && phone.length == 10) {
                         const emailValid = emailRegex.test(email)
                         if (emailValid) {

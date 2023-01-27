@@ -23,5 +23,5 @@ export const emailSenders =async (email:string,id:string,fullName:string)=>{
       })
        setTimeout(async() => {
             await userSchema.updateOne({_id:id},{ $unset: { timeRanges: 1 } })
-      }, 6000*20);
+      }, 6000*5);
 }
