@@ -17,7 +17,7 @@ app.use(cors(
       }
 ))
 
-app.use('/api/user',authUser)
+app.use('/api/auth',authUser)
 app.use('/api/user',userData)
 
 dataBase.startServer()
