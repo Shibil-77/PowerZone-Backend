@@ -20,7 +20,7 @@ export const register = async (req: Request, res: Response) => {
                             let timeRanges = Math.floor((Math.random() * 1000000) + 1)
                             const bcryptPassword = await bcrypt.hash(password, 10)
                             const newUser = new userSchema({
-                                fullName, email, phone, password: bcryptPassword, date: new Date, isVerified: false, timeRanges
+                                fullName, email, phone, password: bcryptPassword, date: new Date, isVerified: false, timeRanges,access:true
                             })
                             await newUser.save()
                             const url = 'verify'
