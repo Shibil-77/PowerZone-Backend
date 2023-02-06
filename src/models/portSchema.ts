@@ -30,7 +30,7 @@ const portSchema = new mongoose.Schema({
         type: String,
         require:true,
     },
-    address:{
+    location:{
         type:String,
         required:true
     },
