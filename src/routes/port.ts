@@ -12,7 +12,7 @@ router.get('/mapData',authMiddleware,mapData)
 
 router.post("/findPortData",authMiddleware,findPortData)
 
-router.post('/booking',bookings)
+router.post('/booking',authMiddleware,bookings)
 
 
 export default router

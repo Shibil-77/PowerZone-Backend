@@ -1,5 +1,5 @@
 import express  from "express"
-import {getUserData ,getUserAccess} from '../controllers/userControllers'
+import {getUserData ,getUserAccess} from '../controllers/adminControllers'
 const router = express.Router()
 
 router.get('/getUsersData',getUserData)

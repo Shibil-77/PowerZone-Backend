@@ -50,7 +50,7 @@ export const findPortData = async (req: Request, res: Response) => {
       const { userId, portId } = req.body;
       if (portId) {
          const myArray = portId.split("#");
-         const portData = await portSchema.findOne({ portId:myArray[1] })
+         const portData = await portSchema.findOne({ portId: myArray[1] })
          console.log(portData);
          res.status(200).json(portData)
       }
@@ -61,22 +61,22 @@ export const findPortData = async (req: Request, res: Response) => {
 
 
 export const bookings = async (req: Request, res: Response) => {
-   try { 
-      const { time,date, id } = req.body;
+   try {
+      const { time, date, id,userId } = req.body;
 
-       console.log(req.body)
+      console.log(req.body)
       const newBooking = new bookingSchema({
-        time,
-        date,
-        portId: req.body.id,
-        userId: req.body.userId,
+         time,
+         date,
+         portId: req.body.id,
+         userId,
       })
 
       console.log(newBooking);
-      
+
       await newBooking.save()
       res.status(200).json({ message: newBooking.id })
    } catch (error) {
-        
+
    }
 }
