@@ -3,7 +3,7 @@ import cors from 'cors'
 import "dotenv/config"
 const dataBase = require('./index')
 import authUser from './routes/authUser'
-import userData from './routes/user'
+import admin from './routes/admin'
 import port from './routes/port'
 
 const app:Application =express()
@@ -19,7 +19,7 @@ app.use(cors(
 ))
 
 app.use('/api/auth',authUser)
-app.use('/api/user',userData)
+app.use('/api/admin',admin)
 app.use('/api/port',port)
 
 dataBase.startServer()

@@ -1,5 +1,7 @@
 import { Express, Request, Response } from "express";
 import userSchema from "../models/userSchema";
+const emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+import bcrypt from "bcrypt"
 
 export const getUserData = async (req: Request, res: Response) => {
    try {
@@ -15,6 +17,7 @@ export const getUserData = async (req: Request, res: Response) => {
       res.status(500).json({ message: "server error" });
    }
 }
+
 
 export const getUserAccess = async (req: Request, res: Response) => {
    try {
@@ -40,5 +43,38 @@ export const getUserAccess = async (req: Request, res: Response) => {
    } catch (error) {
       res.status(500).json('server error')
    }
+
+}
+
+
+export const adminLogin =  async (req: Request, res: Response) => {
+
+   try {
+      const { email, password } = req.body
+      if (email !== null && password !== null) {
+          const emailValid = emailRegex.test(email)
+          if (emailValid) {
+              const user = await userSchema.findOne({ email: email })
+              if (user) {
+                  if (await bcrypt.compare(password, user.password)) {
+                     console.log("hello");
+                     
+                     //  const token =await generateToken(user.id)
+                      res.status(200).json({ message: "Admin Login successful",user})
+                  } else {
+                      res.status(400).json({ message: "Invalid password" })
+                  }
+              } else {
+                  res.status(400).json({ message: "Invalid email" })
+              }
+          } else {
+              res.status(400).json({ message: "Invalid email" })
+          }
+      } else {
+          res.status(400).json({ message: "Please fill all fields" })
+      }
+  } catch (error) {
+      return res.status(500).json({ message: "server error" })
+  }
 
 }
