@@ -4,10 +4,10 @@ import bookingSchema from "../models/bookingSchema"
 
 export const addChargingPort = async (req: Request, res: Response) => {
    try {
-      const { kW, rate, dayStart, dayEnd, timeStart, timeEnd, type, location, city, postalCode, country, userId } = req.body
+      const { kW, rate, dayDetail, type, location, city, postalCode, country, userId } = req.body
       if (req.body) {
          const newPort = new portSchema({
-            kW, rate, dayStart, dayEnd, timeStart, timeEnd, type, location, city, postalCode, country, userId, access: false
+            kW, rate, dayDetail, type, location, city, postalCode, country, userId, access: false
          })
          await newPort.save()
          res.status(200).json({ message: newPort.id })
@@ -62,7 +62,7 @@ export const findPortData = async (req: Request, res: Response) => {
 
 export const bookings = async (req: Request, res: Response) => {
    try {
-      const { time, date, id,userId } = req.body;
+      const { time, date, id, userId } = req.body;
 
       console.log(req.body)
       const newBooking = new bookingSchema({

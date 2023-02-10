@@ -10,20 +10,8 @@ const portSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    dayStart: {
-        type: String,
-        required: true
-    },
-    dayEnd: {
-        type: String,
-        required: true
-    },  
-    timeStart: {
-        type: String,
-        default: false
-    },
-    timeEnd:{
-        type: String,
+    dayDetail: {
+        type: Array,
         required: true
     },
     type:{
