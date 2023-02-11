@@ -126,7 +126,6 @@ export const forgotPassword =  async (req: Request, res: Response) => {
                 if (user) {
                     const url = 'resetPassword'
                     await emailSenders(email,user.id,user.fullName,url)
-                    console.log("email sent");
                     res.status(200).json({ message: "Email sent"})
                 }else {
                     res.status(400).json({ message: "Invalid email" })

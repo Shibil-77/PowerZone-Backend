@@ -2,6 +2,8 @@ import { Express, Request, Response } from "express";
 import userSchema from "../models/userSchema";
 const emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 import bcrypt from "bcrypt"
+import adminSchema from '../models/admin'
+import { generateToken } from '../utils/jwt'
 
 export const getUserData = async (req: Request, res: Response) => {
    try {
@@ -21,11 +23,9 @@ export const getUserData = async (req: Request, res: Response) => {
 
 export const getUserAccess = async (req: Request, res: Response) => {
    try {
-      console.log(req.params.id);
       const id = req.params.id
       const userData: any = await userSchema.findOne({ _id: id })
       if (userData) {
-         console.log(userData.access);
          if (userData.access) {
             userData.access = false
          } else {
@@ -50,17 +50,20 @@ export const getUserAccess = async (req: Request, res: Response) => {
 export const adminLogin =  async (req: Request, res: Response) => {
 
    try {
+      
+      
       const { email, password } = req.body
       if (email !== null && password !== null) {
           const emailValid = emailRegex.test(email)
           if (emailValid) {
-              const user = await userSchema.findOne({ email: email })
-              if (user) {
-                  if (await bcrypt.compare(password, user.password)) {
-                     console.log("hello");
-                     
-                     //  const token =await generateToken(user.id)
-                      res.status(200).json({ message: "Admin Login successful",user})
+              const admin = await adminSchema.findOne({ email: email })
+              console.log("==================5=========");
+              if (admin) {
+               console.log("==================6=========");
+                  if (await bcrypt.compare(password, admin.password)) {
+                   
+                      const adminToken =await generateToken(admin.id)
+                      res.status(200).json({ message: "Admin Login successful",admin,adminToken})
                   } else {
                       res.status(400).json({ message: "Invalid password" })
                   }

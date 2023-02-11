@@ -50,7 +50,8 @@ export const findPortData = async (req: Request, res: Response) => {
       const { userId, portId } = req.body;
       if (portId) {
          const myArray = portId.split("#");
-         const portData = await portSchema.findOne({ portId: myArray[1] })
+         console.log(myArray);
+         const portData = await portSchema.findOne({ _id: myArray[1] })
          console.log(portData);
          res.status(200).json(portData)
       }
