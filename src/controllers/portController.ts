@@ -36,7 +36,7 @@ export const addMapValue = async (req: Request, res: Response) => {
 
 export const mapData = async (req: Request, res: Response) => {
    try {
-      const mapValue = await portSchema.find()
+      const mapValue = await portSchema.find({access:true})
       if (mapValue) {
          res.status(200).json(mapValue)
       }
