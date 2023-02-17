@@ -9,14 +9,12 @@ import portSchema from "../models/portSchema"
 export const getUserData = async (req: Request, res: Response) => {
    try {
       const userData = await userSchema.find()
-      console.log(userData);
       if (userData) {
          res.status(200).json(userData);
       } else {
          res.status(500).json({ message: "server error" });
       }
    } catch (error) {
-      console.log(error);
       res.status(500).json({ message: "server error" });
    }
 }
@@ -27,16 +25,13 @@ export const getUserAccess = async (req: Request, res: Response) => {
       const id = req.params.id
       const userData: any = await userSchema.findOne({ _id: id })
       if (userData) {
-         console.log(userData.access,"console.log(userData.access);");
          if (userData.access) {
             userData.access = false
          }else{
             userData.access = true
          }
-    
          const result = await userData.save()
          if (result) {
-            console.log("result: " + result); 
             res.status(200).json('success')
          } else {
             res.status(500).json('server error')
@@ -94,14 +89,10 @@ export const getPortData = async (req: Request, res: Response) => {
 }
 
 export const portAccess =  async (req: Request, res: Response) => {
-   try {
-      console.log("====================");
-      
+   try { 
       const id = req.params.id
       const portData: any = await portSchema.findOne({ _id: id })
-      console.log(portData);
       if (portData) {
-         console.log(portData.access,"console.log(userData.access);");
          if (portData.access) {
             portData.access = false
          }else{
@@ -109,7 +100,6 @@ export const portAccess =  async (req: Request, res: Response) => {
          }
          const result = await portData.save()
          if (result) {
-            console.log("result: " + result); 
             res.status(200).json('success')
          } else {
             res.status(500).json('server error')

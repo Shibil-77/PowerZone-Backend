@@ -21,9 +21,7 @@ export const addMapValue = async (req: Request, res: Response) => {
    try {
       const { map, id } = req.body;
       if (req.body) {
-         console.log(id);
          const myArray = id.split("#");
-         console.log(myArray);
          await portSchema.updateOne({ _id: myArray[1] }, { $set: { map: map } },)
          res.status(200).json({ message: "MapValue successfully added" })
       } else {
@@ -36,7 +34,7 @@ export const addMapValue = async (req: Request, res: Response) => {
 
 export const mapData = async (req: Request, res: Response) => {
    try {
-      const mapValue = await portSchema.find({access:true})
+      const mapValue: object = await portSchema.find({ access: true })
       if (mapValue) {
          res.status(200).json(mapValue)
       }
@@ -49,11 +47,13 @@ export const findPortData = async (req: Request, res: Response) => {
    try {
       const { userId, portId } = req.body;
       if (portId) {
+         const today = new Date();
          const myArray = portId.split("#");
-         console.log(myArray);
          const portData = await portSchema.findOne({ _id: myArray[1] })
+         const bookingData = await bookingSchema.find({ portId: myArray[1], date: { $gte: today } })
          console.log(portData);
-         res.status(200).json(portData)
+         console.log(bookingData, "=======================");
+         res.status(200).json({ portData, bookingData })
       }
    } catch (error) {
       res.status(500).json({ error: error })
@@ -64,17 +64,14 @@ export const findPortData = async (req: Request, res: Response) => {
 export const bookings = async (req: Request, res: Response) => {
    try {
       const { time, date, id, userId } = req.body;
-
-      console.log(req.body)
-      const newBooking = new bookingSchema({
+      const port = id.split("#");
+      const portId: string = port[1]
+      const newBooking: any = new bookingSchema({
          time,
          date,
-         portId: req.body.id,
+         portId,
          userId,
       })
-
-      console.log(newBooking);
-
       await newBooking.save()
       res.status(200).json({ message: newBooking.id })
    } catch (error) {
