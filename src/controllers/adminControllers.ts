@@ -5,6 +5,7 @@ import bcrypt from "bcrypt"
 import adminSchema from '../models/admin'
 import { generateToken } from '../utils/jwt'
 import portSchema from "../models/portSchema"
+import bookingSchema from "../models/bookingSchema";
 
 export const getUserData = async (req: Request, res: Response) => {
    try {
@@ -111,5 +112,17 @@ export const portAccess =  async (req: Request, res: Response) => {
       res.status(500).json('server error')
    }
 
+}
+
+
+export const adminFindNewBookings = async (req: Request, res: Response) => {
+   try {
+      const bookingData = await bookingSchema.find()
+      if (bookingData) {
+         res.status(200).json(bookingData)
+      }
+   } catch (error) {
+      return res.status(500).json({ message: "server error" })
+   }
 }
 

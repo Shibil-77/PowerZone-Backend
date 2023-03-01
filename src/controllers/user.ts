@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import userSchema from "../models/userSchema";
 import bookingSchema from "../models/bookingSchema";
 import portSchema from "../models/portSchema";
+import mongoose, { Mongoose } from "mongoose";
 
 
 export const getProfileData = async (req: Request, res: Response) => {
@@ -21,9 +22,7 @@ export const findNewBookings = async (req: Request, res: Response) => {
     try {
         const today = new Date();
         const newBookings = await bookingSchema.find({ userId: req.body.userId, date: { $gte: today } })
-        if (newBookings) {
-            console.log("==================");
-            
+        if (newBookings) {            
             res.status(200).send({ newBookings })
         }
     } catch (error) {
@@ -31,14 +30,32 @@ export const findNewBookings = async (req: Request, res: Response) => {
     }
 }
 
-export const findChargingPort =async (req: Request, res: Response) => {
+
+export const portDetailsFinding =async (req: Request, res: Response) => {
     try {
-        console.log("=================");
-        
         const chargingData = await portSchema.find({ userId: req.body.userId })
         if (chargingData) {
             res.status(200).send({ chargingData })
         }
+    } catch (error) {
+        res.status(500).send({ error })
+    }
+}
+
+export const deleteChargingPort = async (req: Request, res: Response) => {
+    try {    
+         await portSchema.deleteOne({ _id: req.params.id })
+            res.status(200).send({ massage:"successFully deleted" })
+    } catch (error) {
+        res.status(500).send({ error })
+    }
+}
+
+export const bookingCancel =  async (req: Request, res: Response) => {
+    try {    
+         await bookingSchema.deleteOne({ _id: new mongoose.Types.ObjectId(req.params.id) });        
+            res.status(200).send({ massage:"successFully booking Cancel" })
+
     } catch (error) {
         res.status(500).send({ error })
     }
