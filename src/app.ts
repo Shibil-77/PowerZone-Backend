@@ -13,7 +13,7 @@ const app:Application =express()
 app.use(express.json())
 app.use(cors(
     {
-        origin: ["http://localhost:3000","https://smartshoping.club","https://www.smartshoping.club"],
+        origin: ["http://localhost:3000","https://www.smartshoping.club","https://smartshoping.club"],
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
         credentials: true,
         exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],
