@@ -3,7 +3,6 @@ import userSchema from "../models/userSchema";
 const emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 import { generateToken } from '../utils/jwt'
 import { emailSenders } from '../utils/authUtils'
-import { idText } from "typescript";
 import bcrypt from "bcrypt"
 
 
@@ -98,7 +97,7 @@ export const login = async (req: Request, res: Response) => {
                 if (user) {
                     if (await bcrypt.compare(password, user.password)) {
                         const token =await generateToken(user.id)
-                        res.status(200).json({ message: "Login successful", token,user})
+                        res.status(200).json({ message: "Login successful",token,user})
                     } else {
                         res.status(400).json({ message: "Invalid password" })
                     }

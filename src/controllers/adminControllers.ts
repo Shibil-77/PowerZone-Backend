@@ -126,3 +126,25 @@ export const adminFindNewBookings = async (req: Request, res: Response) => {
    }
 }
 
+export const getDashBoardData =  async (req: Request, res: Response) => {
+   try {
+      const bookingData = await bookingSchema.aggregate([
+         {
+            $group: {
+              _id: {
+                day: { $dayOfMonth: '$date' }
+              },
+              count: { $count: {} }
+            }
+         }
+      ])
+
+      console.log(bookingData)
+     return res.status(200).json(bookingData)
+      // if (bookingData) {
+      //    res.status(200).json(bookingData)
+      // }
+   } catch (error) {
+      return res.status(500).json({ message: "server error" })
+   }
+}

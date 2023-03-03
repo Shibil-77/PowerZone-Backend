@@ -51,8 +51,6 @@ export const findPortData = async (req: Request, res: Response) => {
          const myArray = portId.split("#");
          const portData = await portSchema.findOne({ _id: myArray[1] })
          const bookingData = await bookingSchema.find({ portId: myArray[1], date: { $gte: today } })
-         console.log(portData);
-         console.log(bookingData, "=======================");
          res.status(200).json({ portData, bookingData })
       }
    } catch (error) {
