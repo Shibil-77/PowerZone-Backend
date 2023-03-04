@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bookingCancel = exports.deleteChargingPort = exports.portDetailsFinding = exports.findNewBookings = exports.getProfileData = void 0;
+exports.userPortBooking = exports.bookingCancel = exports.deleteChargingPort = exports.portDetailsFinding = exports.findNewBookings = exports.getProfileData = void 0;
 const userSchema_1 = __importDefault(require("../models/userSchema"));
 const bookingSchema_1 = __importDefault(require("../models/bookingSchema"));
 const portSchema_1 = __importDefault(require("../models/portSchema"));
@@ -76,3 +76,16 @@ const bookingCancel = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.bookingCancel = bookingCancel;
+const userPortBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const portData = yield portSchema_1.default.find({ userId: req.body.userId });
+        if (portData) {
+            const bookingData = yield bookingSchema_1.default.find({ userId: { $in: portData } });
+            res.status(200).send({ massage: "successFully booking Cancel" });
+        }
+    }
+    catch (error) {
+        res.status(500).send({ error });
+    }
+});
+exports.userPortBooking = userPortBooking;

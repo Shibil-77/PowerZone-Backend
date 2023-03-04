@@ -16,7 +16,7 @@ const app = (0, express_1.default)();
 exports.app = app;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://www.smartshoping.club", "https://smartshoping.club"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
     exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],

@@ -12,4 +12,5 @@ router.get("/findNewBookings", authMiddleware, user_1.findNewBookings);
 router.get('/portDetailsFinding', authMiddleware, user_1.portDetailsFinding);
 router.get('/deletePort/:id', user_1.deleteChargingPort);
 router.get('/bookingCancel/:id', user_1.bookingCancel);
+router.get('/userPortBooking', user_1.userPortBooking);
 exports.default = router;
