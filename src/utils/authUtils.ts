@@ -18,7 +18,7 @@ export const emailSenders =async (email:string,id:string,fullName:string,url:str
         to: email,
         subject: "Email verification from powerZone",
         text:`Hi ${fullName},\n\nPlease verify your account by clicking 
-        http://smartshoping.club/${url}/${id}
+        https://smartshoping.club/${url}/${id}
         \nThanks `
       })
        setTimeout(async() => {
