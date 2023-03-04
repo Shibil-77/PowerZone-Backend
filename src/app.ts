@@ -11,14 +11,14 @@ import user from './routes/user'
 const app:Application =express()
 
 app.use(express.json())
-// app.use(cors(
-//     {
-//         origin: ["http://localhost:3000","https://www.smartshoping.club","https://smartshoping.club"],
-//         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-//         credentials: true,
-//         exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],
-//       }
-// ))
+app.use(cors(
+    {
+        origin: ["http://localhost:3000","https://www.smartshoping.club","https://smartshoping.club"],
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        credentials: true,
+        exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],
+      }
+))
 
 app.use('/api/auth',authUser)
 app.use('/api/admin',admin)
