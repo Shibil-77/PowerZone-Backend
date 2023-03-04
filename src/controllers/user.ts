@@ -22,7 +22,7 @@ export const findNewBookings = async (req: Request, res: Response) => {
     try {
         const today = new Date();
         const newBookings = await bookingSchema.find({ userId: req.body.userId, date: { $gte: today } })
-        if (newBookings) {            
+        if (newBookings) {
             res.status(200).send({ newBookings })
         }
     } catch (error) {
@@ -31,7 +31,7 @@ export const findNewBookings = async (req: Request, res: Response) => {
 }
 
 
-export const portDetailsFinding =async (req: Request, res: Response) => {
+export const portDetailsFinding = async (req: Request, res: Response) => {
     try {
         const chargingData = await portSchema.find({ userId: req.body.userId })
         if (chargingData) {
@@ -43,19 +43,31 @@ export const portDetailsFinding =async (req: Request, res: Response) => {
 }
 
 export const deleteChargingPort = async (req: Request, res: Response) => {
-    try {    
-         await portSchema.deleteOne({ _id: req.params.id })
-            res.status(200).send({ massage:"successFully deleted" })
+    try {
+        await portSchema.deleteOne({ _id: req.params.id })
+        res.status(200).send({ massage: "successFully deleted" })
     } catch (error) {
         res.status(500).send({ error })
     }
 }
 
-export const bookingCancel =  async (req: Request, res: Response) => {
-    try {    
-         await bookingSchema.deleteOne({ _id: new mongoose.Types.ObjectId(req.params.id) });        
-            res.status(200).send({ massage:"successFully booking Cancel" })
+export const bookingCancel = async (req: Request, res: Response) => {
+    try {
+        await bookingSchema.deleteOne({ _id: new mongoose.Types.ObjectId(req.params.id) });
+        res.status(200).send({ massage: "successFully booking Cancel" })
 
+    } catch (error) {
+        res.status(500).send({ error })
+    }
+}
+
+export const userPortBooking = async (req: Request, res: Response) => {
+    try {
+        const portData = await portSchema.find({ userId: req.body.userId });
+        if (portData) {
+            const bookingData = await bookingSchema.find({ userId: { $in: portData } })
+            res.status(200).send({ massage: "successFully booking Cancel" })
+        }
     } catch (error) {
         res.status(500).send({ error })
     }
