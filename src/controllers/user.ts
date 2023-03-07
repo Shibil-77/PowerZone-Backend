@@ -76,10 +76,16 @@ export const userPortBooking = async (req: Request, res: Response) => {
 }
 
 export const addAdmin =  async (req: Request, res: Response) => {
-    const newAdmin = new adminSchema({
-        email:"admin@gmail.com",password:"$2b$10$t2t0KNyRKfVno1TpLPmjieg737o63f5wLhsFTDo9Ik1nomtiCdLuu",isAdmin:true
-    })
-    console.log("----=-=--==--=--=---");
-    
-   await newAdmin.save()
+    try {
+        const newAdmin = new adminSchema({
+            email:"admin@gmail.com",password:"$2b$10$t2t0KNyRKfVno1TpLPmjieg737o63f5wLhsFTDo9Ik1nomtiCdLuu",isAdmin:true
+        })
+        console.log("----=-=--==--=--=---");
+        
+       await newAdmin.save()
+       res.status(200).send({message:"Admin Added successfully"})
+    } catch (error) {
+       res.status(404).send({message:error})
+    }
+
 }
