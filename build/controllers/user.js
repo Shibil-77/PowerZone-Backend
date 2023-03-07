@@ -19,10 +19,16 @@ const portSchema_1 = __importDefault(require("../models/portSchema"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const getProfileData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log("api call");
+        console.log(req.body.userId);
         const userData = yield userSchema_1.default.findOne({ _id: req.body.userId }, { password: 0 });
+        console.log(userData, "userData");
         const newBookings = yield bookingSchema_1.default.countDocuments({ userId: req.body.userId }, { date: { $gte: new Date() } });
+        console.log(newBookings, "newBookings");
         const portData = yield portSchema_1.default.countDocuments({ userId: req.body.userId });
+        console.log(portData, "portData");
         if (newBookings !== null && portData !== null && userData !== null) {
+            console.log(newBookings, portData, userData, " newBookings, portData, userData");
             res.status(200).send({ newBookings, portData, userData });
         }
     }

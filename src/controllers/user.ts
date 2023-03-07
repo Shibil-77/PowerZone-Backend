@@ -10,7 +10,7 @@ export const getProfileData = async (req: Request, res: Response) => {
         const userData = await userSchema.findOne({ _id: req.body.userId }, { password: 0 });
         const newBookings = await bookingSchema.countDocuments({ userId: req.body.userId }, { date: { $gte: new Date() } })
         const portData = await portSchema.countDocuments({ userId: req.body.userId })
-        if (newBookings !== null && portData !== null && userData !== null) {
+        if (newBookings !== null && portData !== null && userData !== null) {            
             res.status(200).send({ newBookings, portData, userData })
         }
     } catch (error) {
@@ -63,15 +63,10 @@ export const bookingCancel = async (req: Request, res: Response) => {
 
 export const userPortBooking = async (req: Request, res: Response) => {
     try {
-        console.log(req.body.userId,"user id");
-        
         const portData = await portSchema.find({ userId: req.body.userId });
          const filterData = portData.map((data)=>data.id)
-        console.log(filterData);
-        
         if (portData) {
             const bookingData = await bookingSchema.find({ portId: { $in: filterData } })
-            console.log(bookingData,"bookingData");
             res.status(200).send(bookingData)
         }
     } catch (error) {

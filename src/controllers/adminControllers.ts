@@ -139,7 +139,6 @@ export const getDashBoardData =  async (req: Request, res: Response) => {
          }
       ])
 
-      console.log(bookingData)
      return res.status(200).json(bookingData)
       // if (bookingData) {
       //    res.status(200).json(bookingData)
