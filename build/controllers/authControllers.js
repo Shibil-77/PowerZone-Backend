@@ -24,7 +24,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (fullName !== null && email !== null && phone !== null && password !== null) {
             if (password === confirmPassword) {
                 const userExist = yield userSchema_1.default.findOne({ email: email });
-                if (!userExist) {
+                if (!userExist && (userExist === null || userExist === void 0 ? void 0 : userExist.isVerified)) {
                     if (phone !== null && phone !== undefined && phone.length == 10) {
                         const emailValid = emailRegex.test(email);
                         if (emailValid) {
@@ -116,12 +116,17 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             if (emailValid) {
                 const user = yield userSchema_1.default.findOne({ email: email });
                 if (user) {
-                    if (yield bcrypt_1.default.compare(password, user.password)) {
-                        const token = yield (0, jwt_1.generateToken)(user.id);
-                        res.status(200).json({ message: "Login successful", token, user });
+                    if (user === null || user === void 0 ? void 0 : user.access) {
+                        if (yield bcrypt_1.default.compare(password, user.password)) {
+                            const token = yield (0, jwt_1.generateToken)(user.id);
+                            res.status(200).json({ message: "Login successful", token, user });
+                        }
+                        else {
+                            res.status(400).json({ message: "Invalid password" });
+                        }
                     }
                     else {
-                        res.status(400).json({ message: "Invalid password" });
+                        res.status(400).json({ message: "Blocked This Account" });
                     }
                 }
                 else {

@@ -78,10 +78,14 @@ const bookingCancel = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.bookingCancel = bookingCancel;
 const userPortBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(req.body.userId, "user id");
         const portData = yield portSchema_1.default.find({ userId: req.body.userId });
+        const filterData = portData.map((data) => data.id);
+        console.log(filterData);
         if (portData) {
-            const bookingData = yield bookingSchema_1.default.find({ userId: { $in: portData } });
-            res.status(200).send({ massage: "successFully booking Cancel" });
+            const bookingData = yield bookingSchema_1.default.find({ portId: { $in: filterData } });
+            console.log(bookingData, "bookingData");
+            res.status(200).send(bookingData);
         }
     }
     catch (error) {

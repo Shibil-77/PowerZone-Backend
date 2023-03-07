@@ -31,7 +31,7 @@ const emailSenders = (email, id, fullName, url) => __awaiter(void 0, void 0, voi
         to: email,
         subject: "Email verification from powerZone",
         text: `Hi ${fullName},\n\nPlease verify your account by clicking 
-        http://localhost:3000/${url}/${id}
+        https://smartshoping.club/${url}/${id}
         \nThanks `
     });
     setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {

@@ -63,10 +63,16 @@ export const bookingCancel = async (req: Request, res: Response) => {
 
 export const userPortBooking = async (req: Request, res: Response) => {
     try {
+        console.log(req.body.userId,"user id");
+        
         const portData = await portSchema.find({ userId: req.body.userId });
+         const filterData = portData.map((data)=>data.id)
+        console.log(filterData);
+        
         if (portData) {
-            const bookingData = await bookingSchema.find({ userId: { $in: portData } })
-            res.status(200).send({ massage: "successFully booking Cancel" })
+            const bookingData = await bookingSchema.find({ portId: { $in: filterData } })
+            console.log(bookingData,"bookingData");
+            res.status(200).send(bookingData)
         }
     } catch (error) {
         res.status(500).send({ error })

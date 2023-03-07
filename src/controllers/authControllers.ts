@@ -11,18 +11,18 @@ export const register = async (req: Request, res: Response) => {
         const { fullName, email, password, phone, confirmPassword } = req.body
         if (fullName !== null && email !== null && phone !== null && password !== null) {
             if (password === confirmPassword) {
-                const userExist = await userSchema.findOne({ email: email })
-                if (!userExist) {
+                const userExist:any = await userSchema.findOne({ email: email })
+                if (!userExist && userExist?.isVerified ) {
                     if (phone !== null && phone !== undefined && phone.length == 10) {
                         const emailValid = emailRegex.test(email)
                         if (emailValid) {
-                            let timeRanges = Math.floor((Math.random() * 1000000) + 1)
-                            const bcryptPassword = await bcrypt.hash(password, 10)
+                            let timeRanges:Number = Math.floor((Math.random() * 1000000) + 1)
+                            const bcryptPassword:String = await bcrypt.hash(password, 10)
                             const newUser = new userSchema({
                                 fullName, email, phone, password: bcryptPassword, date: new Date, isVerified: false, timeRanges,access:true
                             })
                             await newUser.save()
-                            const url = 'verify'
+                            const url:any = 'verify'
                             await emailSenders(email, newUser.id, newUser.fullName,url)
                             res.status(200).json({ message: "User created successfully", userId: newUser.id, timeRanges })
                         } else {
@@ -72,7 +72,7 @@ export const verifyRegistration = async (req: Request, res: Response) => {
 export const emailReset = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const user = await userSchema.findById({ _id: id })
+        const user:any = await userSchema.findById({ _id: id })
         if (user) {
             const timeRange = Math.floor((Math.random() * 1000 + 1))
             user.timeRanges = timeRange
@@ -95,12 +95,16 @@ export const login = async (req: Request, res: Response) => {
             if (emailValid) {
                 const user = await userSchema.findOne({ email: email })
                 if (user) {
-                    if (await bcrypt.compare(password, user.password)) {
-                        const token =await generateToken(user.id)
-                        res.status(200).json({ message: "Login successful",token,user})
-                    } else {
-                        res.status(400).json({ message: "Invalid password" })
-                    }
+                     if(user?.access){
+                         if (await bcrypt.compare(password, user.password)) {
+                             const token =await generateToken(user.id)
+                             res.status(200).json({ message: "Login successful",token,user})
+                         } else {
+                             res.status(400).json({ message: "Invalid password" })
+                         }
+                     }else{
+                        res.status(400).json({ message: "Blocked This Account" })
+                     }
                 } else {
                     res.status(400).json({ message: "Invalid email" })
                 }

@@ -10,12 +10,12 @@ router.get("/findNewBookings",authMiddleware,findNewBookings)
 
 router.get('/portDetailsFinding',authMiddleware,portDetailsFinding)
 
-router.get('/deletePort/:id',deleteChargingPort)
+router.get('/deletePort/:id',authMiddleware,deleteChargingPort)
 
 
-router.get('/bookingCancel/:id',bookingCancel)
+router.get('/bookingCancel/:id',authMiddleware,bookingCancel)
 
-router.get('/userPortBooking',userPortBooking)
+router.get('/userPortBooking',authMiddleware,userPortBooking)
 
 
 export default router
