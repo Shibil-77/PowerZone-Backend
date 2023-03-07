@@ -160,7 +160,7 @@ const getDashBoardData = (req, res) => __awaiter(void 0, void 0, void 0, functio
                 }
             }
         ]);
-        console.log(bookingData);
+        console.log(bookingData, "bookingData");
         return res.status(200).json(bookingData);
         // if (bookingData) {
         //    res.status(200).json(bookingData)

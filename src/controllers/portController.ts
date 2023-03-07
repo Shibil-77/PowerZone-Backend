@@ -64,9 +64,11 @@ export const bookings = async (req: Request, res: Response) => {
       const { time, date, id, userId } = req.body;
       const port = id.split("#");
       const portId: string = port[1]
+      const newDate = new Date(date)
+      newDate.setDate(newDate.getDate() + 1);
       const newBooking: any = new bookingSchema({
          time,
-         date,
+         date:newDate,
          portId,
          userId,
       })
@@ -76,3 +78,7 @@ export const bookings = async (req: Request, res: Response) => {
 
    }
 }
+function getDate() {
+   throw new Error("Function not implemented.");
+}
+
