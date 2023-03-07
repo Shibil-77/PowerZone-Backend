@@ -13,4 +13,5 @@ router.get('/getPortData', adminControllers_1.getPortData);
 router.get('/portRequest/:id', adminControllers_1.portAccess);
 router.get('/adminFindNewBookings', adminControllers_1.adminFindNewBookings);
 router.get('/dashBoard', adminControllers_1.getDashBoardData);
+router.get('/salesReport', adminControllers_1.salesReport);
 exports.default = router;

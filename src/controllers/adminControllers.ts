@@ -149,3 +149,29 @@ export const getDashBoardData =  async (req: Request, res: Response) => {
       return res.status(500).json({ message: "server error" })
    }
 }
+
+export const salesReport = async (req: Request, res: Response) => {
+   console.log("--------------0-0-0-0-0-0-------");
+   
+   try {
+      const salesData = await bookingSchema.aggregate([
+         {
+            $group: {
+              _id: {
+                day: { $dayOfMonth: '$date' }
+              },
+              count: { $count: {} }
+            }
+         }
+      ])
+
+       console.log(salesData,"salesData");
+       
+     return res.status(200).json(salesData)
+      // if (bookingData) {
+      //    res.status(200).json(bookingData)
+      // }
+   } catch (error) {
+      return res.status(500).json({ message: "server error" })
+   }
+}

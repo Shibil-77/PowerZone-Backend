@@ -78,15 +78,11 @@ const findPortData = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.findPortData = findPortData;
 const bookings = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("---------0----0-0-0-0");
         const { time, date, id, userId } = req.body;
         const port = id.split("#");
         const portId = port[1];
-        console.log("==============");
         const newDate = new Date(date);
-        console.log(newDate);
         newDate.setDate(newDate.getDate() + 1);
-        console.log(newDate, "newDate");
         const newBooking = new bookingSchema_1.default({
             time,
             date: newDate,

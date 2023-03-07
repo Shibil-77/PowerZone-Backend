@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDashBoardData = exports.adminFindNewBookings = exports.portAccess = exports.getPortData = exports.adminLogin = exports.getUserAccess = exports.getUserData = void 0;
+exports.salesReport = exports.getDashBoardData = exports.adminFindNewBookings = exports.portAccess = exports.getPortData = exports.adminLogin = exports.getUserAccess = exports.getUserData = void 0;
 const userSchema_1 = __importDefault(require("../models/userSchema"));
 const emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -171,3 +171,27 @@ const getDashBoardData = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.getDashBoardData = getDashBoardData;
+const salesReport = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("--------------0-0-0-0-0-0-------");
+    try {
+        const salesData = yield bookingSchema_1.default.aggregate([
+            {
+                $group: {
+                    _id: {
+                        day: { $dayOfMonth: '$date' }
+                    },
+                    count: { $count: {} }
+                }
+            }
+        ]);
+        console.log(salesData, "salesData");
+        return res.status(200).json(salesData);
+        // if (bookingData) {
+        //    res.status(200).json(bookingData)
+        // }
+    }
+    catch (error) {
+        return res.status(500).json({ message: "server error" });
+    }
+});
+exports.salesReport = salesReport;
