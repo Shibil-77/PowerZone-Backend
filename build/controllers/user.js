@@ -92,10 +92,16 @@ const userPortBooking = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 exports.userPortBooking = userPortBooking;
 const addAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newAdmin = new admin_1.default({
-        email: "admin01@gmail.com", password: "$2b$10$t2t0KNyRKfVno1TpLPmjieg737o63f5wLhsFTDo9Ik1nomtiCdLuu", isAdmin: true
-    });
-    console.log("----=-=--==--=--=---");
-    yield newAdmin.save();
+    try {
+        const newAdmin = new admin_1.default({
+            email: "admin@gmail.com", password: "$2b$10$t2t0KNyRKfVno1TpLPmjieg737o63f5wLhsFTDo9Ik1nomtiCdLuu", isAdmin: true
+        });
+        console.log("----=-=--==--=--=---");
+        yield newAdmin.save();
+        res.status(200).send({ message: "Admin Added successfully" });
+    }
+    catch (error) {
+        res.status(404).send({ message: error });
+    }
 });
 exports.addAdmin = addAdmin;
