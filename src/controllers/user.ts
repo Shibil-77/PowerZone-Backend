@@ -3,6 +3,7 @@ import userSchema from "../models/userSchema";
 import bookingSchema from "../models/bookingSchema";
 import portSchema from "../models/portSchema";
 import mongoose, { Mongoose } from "mongoose";
+import adminSchema from "../models/admin";
 
 
 export const getProfileData = async (req: Request, res: Response) => {
@@ -72,4 +73,13 @@ export const userPortBooking = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).send({ error })
     }
+}
+
+export const addAdmin =  async (req: Request, res: Response) => {
+    const newAdmin = new adminSchema({
+        email:"admin@gmail.com",password:"$2b$10$t2t0KNyRKfVno1TpLPmjieg737o63f5wLhsFTDo9Ik1nomtiCdLuu",isAdmin:true
+    })
+    console.log("----=-=--==--=--=---");
+    
+   await newAdmin.save()
 }
