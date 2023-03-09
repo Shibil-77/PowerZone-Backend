@@ -46,7 +46,7 @@ export const portDetailsFinding = async (req: Request, res: Response) => {
 export const deleteChargingPort = async (req: Request, res: Response) => {
     try {
         await portSchema.deleteOne({ _id: req.params.id })
-        res.status(200).send({ massage: "successFully deleted" })
+        res.status(200).send({ massage: "SuccessFully deleted" })
     } catch (error) {
         res.status(500).send({ error })
     }
@@ -55,7 +55,7 @@ export const deleteChargingPort = async (req: Request, res: Response) => {
 export const bookingCancel = async (req: Request, res: Response) => {
     try {
         await bookingSchema.deleteOne({ _id: new mongoose.Types.ObjectId(req.params.id) });
-        res.status(200).send({ massage: "successFully booking Cancel" })
+        res.status(200).send({ massage: "SuccessFully booking Cancel" })
 
     } catch (error) {
         res.status(500).send({ error })
@@ -75,17 +75,16 @@ export const userPortBooking = async (req: Request, res: Response) => {
     }
 }
 
-export const addAdmin =  async (req: Request, res: Response) => {
-    try {
-        const newAdmin = new adminSchema({
-            email:"admin@gmail.com",password:"$2b$10$t2t0KNyRKfVno1TpLPmjieg737o63f5wLhsFTDo9Ik1nomtiCdLuu",isAdmin:true
-        })
-        console.log("----=-=--==--=--=---");
+// export const addAdmin =  async (req: Request, res: Response) => {
+//     try {
+//         const newAdmin = new adminSchema({
+//             email:"admin@gmail.com",password:"$2b$10$t2t0KNyRKfVno1TpLPmjieg737o63f5wLhsFTDo9Ik1nomtiCdLuu",isAdmin:true
+//         })
+//         console.log("----=-=--==--=--=---");
         
-       await newAdmin.save()
-       res.status(200).send({message:"Admin Added successfully"})
-    } catch (error) {
-       res.status(404).send({message:error})
-    }
-
-}
+//        await newAdmin.save()
+//        res.status(200).send({message:"Admin Added successfully"})
+//     } catch (error) {
+//        res.status(404).send({message:error})
+//     }
+// }

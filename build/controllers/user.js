@@ -12,12 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addAdmin = exports.userPortBooking = exports.bookingCancel = exports.deleteChargingPort = exports.portDetailsFinding = exports.findNewBookings = exports.getProfileData = void 0;
+exports.userPortBooking = exports.bookingCancel = exports.deleteChargingPort = exports.portDetailsFinding = exports.findNewBookings = exports.getProfileData = void 0;
 const userSchema_1 = __importDefault(require("../models/userSchema"));
 const bookingSchema_1 = __importDefault(require("../models/bookingSchema"));
 const portSchema_1 = __importDefault(require("../models/portSchema"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const admin_1 = __importDefault(require("../models/admin"));
 const getProfileData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userData = yield userSchema_1.default.findOne({ _id: req.body.userId }, { password: 0 });
@@ -60,7 +59,7 @@ exports.portDetailsFinding = portDetailsFinding;
 const deleteChargingPort = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield portSchema_1.default.deleteOne({ _id: req.params.id });
-        res.status(200).send({ massage: "successFully deleted" });
+        res.status(200).send({ massage: "SuccessFully deleted" });
     }
     catch (error) {
         res.status(500).send({ error });
@@ -70,7 +69,7 @@ exports.deleteChargingPort = deleteChargingPort;
 const bookingCancel = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield bookingSchema_1.default.deleteOne({ _id: new mongoose_1.default.Types.ObjectId(req.params.id) });
-        res.status(200).send({ massage: "successFully booking Cancel" });
+        res.status(200).send({ massage: "SuccessFully booking Cancel" });
     }
     catch (error) {
         res.status(500).send({ error });
@@ -91,17 +90,15 @@ const userPortBooking = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.userPortBooking = userPortBooking;
-const addAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const newAdmin = new admin_1.default({
-            email: "admin@gmail.com", password: "$2b$10$t2t0KNyRKfVno1TpLPmjieg737o63f5wLhsFTDo9Ik1nomtiCdLuu", isAdmin: true
-        });
-        console.log("----=-=--==--=--=---");
-        yield newAdmin.save();
-        res.status(200).send({ message: "Admin Added successfully" });
-    }
-    catch (error) {
-        res.status(404).send({ message: error });
-    }
-});
-exports.addAdmin = addAdmin;
+// export const addAdmin =  async (req: Request, res: Response) => {
+//     try {
+//         const newAdmin = new adminSchema({
+//             email:"admin@gmail.com",password:"$2b$10$t2t0KNyRKfVno1TpLPmjieg737o63f5wLhsFTDo9Ik1nomtiCdLuu",isAdmin:true
+//         })
+//         console.log("----=-=--==--=--=---");
+//        await newAdmin.save()
+//        res.status(200).send({message:"Admin Added successfully"})
+//     } catch (error) {
+//        res.status(404).send({message:error})
+//     }
+// }

@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 const authMiddleware = require("../middleware/authMiddleware");
-import {getProfileData,findNewBookings,portDetailsFinding,deleteChargingPort,bookingCancel,userPortBooking,addAdmin} from '../controllers/user'
+import {getProfileData,findNewBookings,portDetailsFinding,deleteChargingPort,bookingCancel,userPortBooking} from '../controllers/user'
 
 
 router.get('/getProfileData',authMiddleware,getProfileData)
@@ -17,6 +17,6 @@ router.get('/bookingCancel/:id',authMiddleware,bookingCancel)
 
 router.get('/userPortBooking',authMiddleware,userPortBooking)
 
-router.get('/addAdmin',addAdmin)
+// router.get('/addAdmin',addAdmin)
 
 export default router

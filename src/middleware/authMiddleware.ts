@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 import { Request, Response, NextFunction } from "express";
 
-module.exports = async (req: Request, res: Response, next: NextFunction) => {    
+module.exports  = async (req: Request, res: Response, next: NextFunction) => {    
   try {
     const authHeader = req.headers.authorization;
     interface ITokenPayload {

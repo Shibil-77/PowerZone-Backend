@@ -8,7 +8,7 @@ import port from './routes/port'
 import user from './routes/user'
 
 
-const app:Application =express()
+const app:Application = express()
 
 app.use(express.json())
 app.use(cors(
@@ -20,10 +20,12 @@ app.use(cors(
       }
 ))
 
+
 app.use('/api/auth',authUser)
 app.use('/api/admin',admin)
 app.use('/api/port',port)
 app.use('/api/user',user)
+
 
 dataBase.startServer()
 
