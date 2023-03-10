@@ -62,7 +62,7 @@ const mapData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.mapData = mapData;
 const findPortData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userId, portId } = req.body;
+        const { portId } = req.body;
         if (portId) {
             const today = new Date();
             const myArray = portId.split("#");

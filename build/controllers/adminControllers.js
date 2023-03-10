@@ -16,7 +16,7 @@ exports.salesReport = exports.getDashBoardData = exports.adminFindNewBookings = 
 const userSchema_1 = __importDefault(require("../models/userSchema"));
 const emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const admin_1 = __importDefault(require("../models/admin"));
+const adminSchema_1 = __importDefault(require("../models/adminSchema"));
 const jwt_1 = require("../utils/jwt");
 const portSchema_1 = __importDefault(require("../models/portSchema"));
 const bookingSchema_1 = __importDefault(require("../models/bookingSchema"));
@@ -69,7 +69,7 @@ const adminLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (email !== null && password !== null) {
             const emailValid = emailRegex.test(email);
             if (emailValid) {
-                const admin = yield admin_1.default.findOne({ email: email });
+                const admin = yield adminSchema_1.default.findOne({ email: email });
                 if (admin) {
                     if (yield bcrypt_1.default.compare(password, admin.password)) {
                         const adminToken = yield (0, jwt_1.generateToken)(admin.id);
@@ -154,17 +154,13 @@ const getDashBoardData = (req, res) => __awaiter(void 0, void 0, void 0, functio
             {
                 $group: {
                     _id: {
-                        day: { $dayOfMonth: '$date' }
+                        day: { $dayOfYear: '$date' }
                     },
                     count: { $count: {} }
                 }
             }
         ]);
-        console.log(bookingData, "bookingData");
         return res.status(200).json(bookingData);
-        // if (bookingData) {
-        //    res.status(200).json(bookingData)
-        // }
     }
     catch (error) {
         return res.status(500).json({ message: "server error" });
@@ -172,7 +168,6 @@ const getDashBoardData = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.getDashBoardData = getDashBoardData;
 const salesReport = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("--------------0-0-0-0-0-0-------");
     try {
         const salesData = yield bookingSchema_1.default.aggregate([
             {
@@ -184,11 +179,7 @@ const salesReport = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 }
             }
         ]);
-        console.log(salesData, "salesData");
         return res.status(200).json(salesData);
-        // if (bookingData) {
-        //    res.status(200).json(bookingData)
-        // }
     }
     catch (error) {
         return res.status(500).json({ message: "server error" });
