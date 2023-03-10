@@ -3,7 +3,7 @@ import userSchema from "../models/userSchema";
 import bookingSchema from "../models/bookingSchema";
 import portSchema from "../models/portSchema";
 import mongoose, { Mongoose } from "mongoose";
-import adminSchema from "../models/admin";
+import adminSchema from "../models/adminSchema";
 
 
 export const getProfileData = async (req: Request, res: Response) => {

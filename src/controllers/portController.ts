@@ -45,7 +45,7 @@ export const mapData = async (req: Request, res: Response) => {
 
 export const findPortData = async (req: Request, res: Response) => {
    try {
-      const { userId, portId } = req.body;
+      const { portId } = req.body;
       if (portId) {
          const today = new Date();
          const myArray = portId.split("#");
@@ -68,7 +68,7 @@ export const bookings = async (req: Request, res: Response) => {
       newDate.setDate(newDate.getDate() + 1);
       const newBooking: any = new bookingSchema({
          time,
-         date:newDate,
+         date: newDate,
          portId,
          userId,
       })

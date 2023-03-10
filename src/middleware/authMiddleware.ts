@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 import { Request, Response, NextFunction } from "express";
 
-module.exports  = async (req: Request, res: Response, next: NextFunction) => {    
+module.exports = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const authHeader = req.headers.authorization;
     interface ITokenPayload {
@@ -20,9 +20,9 @@ module.exports  = async (req: Request, res: Response, next: NextFunction) => {
       token,
       process.env.SECRET_TOKEN,
       (err: object | null, decoded: object | undefined) => {
-        if (err) {    
+        if (err) {
           console.log(err);
-                
+
           return res.send({
             message: "auth failed",
             Status: false,
@@ -36,7 +36,7 @@ module.exports  = async (req: Request, res: Response, next: NextFunction) => {
     );
   } catch (error) {
     console.log(error);
-    
+
     return res.status(401).send({
       message: "auth failed",
       success: false,
