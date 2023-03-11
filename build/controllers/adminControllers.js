@@ -154,12 +154,13 @@ const getDashBoardData = (req, res) => __awaiter(void 0, void 0, void 0, functio
             {
                 $group: {
                     _id: {
-                        day: { $dayOfYear: '$date' }
+                        day: { $dayOfMonth: '$date' }
                     },
                     count: { $count: {} }
                 }
             }
         ]);
+        console.log(bookingData);
         return res.status(200).json(bookingData);
     }
     catch (error) {

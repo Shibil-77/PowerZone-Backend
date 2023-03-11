@@ -138,6 +138,7 @@ export const getDashBoardData = async (req: Request, res: Response) => {
             }
          }
       ])
+      console.log(bookingData);
       return res.status(200).json(bookingData)
    } catch (error) {
       return res.status(500).json({ message: "server error" })
